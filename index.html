@@ -324,6 +324,35 @@
             </TABLE>
         </CENTER>
     </div>
+
+    <script>
+        // Function to append timestamp to hrefs
+        function appendTimestampToHrefs() {
+            // Get all 'a' elements on the page
+            const links = document.getElementsByTagName('a');
+
+            // Current timestamp
+            const timestamp = new Date().getTime();
+
+            // Iterate through all links
+            for (let i = 0; i < links.length; i++) {
+                let href = links[i].getAttribute('href');
+
+                // Check if href exists and is not empty
+                if (href && href.trim() !== '') {
+                    // Check if the href is a relative URL or an absolute URL for the same domain
+                    if (href.indexOf('http') !== 0 || href.indexOf(window.location.hostname) !== -1) {
+                        // Append timestamp
+                        href += (href.indexOf('?') === -1 ? '?' : '&') + 't=' + timestamp;
+                        links[i].setAttribute('href', href);
+                    }
+                }
+            }
+        }
+
+        // Run the function when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', appendTimestampToHrefs);
+    </script>
 </BODY>
 
 </HTML>
